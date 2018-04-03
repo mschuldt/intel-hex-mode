@@ -19,11 +19,11 @@
 
 ;; Authors: Rubens Ramos <rubensr AT users.sourceforge.net>
 ;; Maintainer: Rubens Fernandes <rubensr AT users.sourceforge.net>
-;; Homepage: None
+;; URL: https://github.com/mschuldt/intel-hex-mode
 ;; Created: 08 Oct 2008
 ;; Last modified: 07 Oct 2010
 ;; Version: 0.1.2
-;; Keywords: mode intel hex
+;; Keywords: tools hex
 
 ;;; Commentary:
 ;; Use this mode for editing files in the intel hex format
