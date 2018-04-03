@@ -255,7 +255,6 @@ nil is used"
 
 (defun intel-hex-address ()
   "Return a string for the mode line."
-  (interactive)
   (let ((decoded (intel-hex-decode-line)))
     (let ((byte-count (string-to-number (nth 1 decoded) 16))
           (base-addr (string-to-number (nth 2 decoded) 16))
@@ -281,7 +280,6 @@ nil is used"
 (defun intel-hex-get-segment-base ()
   "Search backwards for the first record extended segment address record.
 return its value, or zero"
-  (interactive)
   (save-excursion
     (if (search-backward ":02000002" nil t)
         (progn
