@@ -18,7 +18,7 @@
 ;; MA 02111-1307 USA
 
 ;; Authors: Rubens Ramos <rubensr AT users.sourceforge.net>
-;; Maintainer: Rubens Fernandes <rubensr AT users.sourceforge.net>
+;; Maintainer: Michael Schuldt <mbschuldt@gmail.com>
 ;; URL: https://github.com/mschuldt/intel-hex-mode
 ;; Created: 08 Oct 2008
 ;; Last modified: 07 Oct 2010
