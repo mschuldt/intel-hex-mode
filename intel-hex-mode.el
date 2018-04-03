@@ -203,7 +203,7 @@ yet, one is appended, otherwise the current one is replaced if necessary."
 	    (if (/= new-checksum old-checksum)
 		(progn
 		  (if (nth 5 decoded)
-		      (delete-backward-char 2))
+		      (delete-char -2))
 		  (insert (format "%02X" new-checksum))
 		  (message
 		   (format "Line checksum updated from %02X to %02X."
