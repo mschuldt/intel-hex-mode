@@ -1,0 +1,19 @@
+
+This is an Emacs major mode for working with Intel Hex files (http://en.wikipedia.org/wiki/Intel_HEX).
+
+Features:
+ - Allows easy updating of checksums
+ - Provides font-locking
+ - Uses the mode line to show addresses and field types
+ - Detects and uses easymenu if available
+ - Works on Emacs and XEmacs
+
+To use intel-hex-mode, add
+#+BEGIN_SRC emacs-lisp
+(load-file "PATH_TO_FILE/intel-hex-mode.el")
+#+END_SRC
+to your =~/.emacs(.el)= or =~/.xemacs/init.el=
+
+By default, this mode is enabled for files with a .a90, .hex, .a43, or .ihx extension.
+
+Use =C-c C-c= to update the current line’s checksum, and =C-c C-b= to update the whole buffer.
