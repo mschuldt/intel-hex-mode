@@ -70,12 +70,12 @@
 (define-abbrev-table 'intel-hex-mode-abbrev-table ())
 
 (defcustom intel-hex-mode-line t
-  "*Show address in mode line"
+  "*Show address in mode line."
   :type 'boolean
   :group 'intel-hex)
 
 (defcustom intel-hex-enable-overwrite t
-  "*Use overwrite minor mode by default"
+  "*Use overwrite minor mode by default."
   :type 'boolean
   :group 'intel-hex)
 
@@ -89,7 +89,7 @@
     ("[^0-9A-Fa-f]+" . font-lock-warning-face)
     ("\\([0-9A-Fa-f]\\{2\\}\\)$" 1 font-lock-keyword-face)
     )
-  "Highlighting patterns for Intel Hex mode")
+  "Highlighting patterns for Intel Hex mode.")
 
 ;;; Key map
 (defvar intel-hex-mode-map
@@ -101,8 +101,8 @@
 
 ;;;###autoload
 (defun intel-hex-mode ()
-  "Major mode for the Intel Hex files. \\<intel-hex-mode-map>
-
+  "Major mode for the Intel Hex files.
+\\<intel-hex-mode-map>
 \\[intel-hex-update-line-checksum]\t- Updates the line checksum.
 \\[intel-hex-update-buffer-checksum]\t- Updates the checksum for all lines in
 the current buffer.
@@ -144,7 +144,7 @@ Turning on Intel Hex mode calls the value of the variable
 (defvar intel-hex-menu nil
   "Menu for Intel Hex Mode.
 This menu will get created automatically if you have the `easymenu'
-package. Note that the latest X/Emacs releases contain this package.")
+package.  Note that the latest X/Emacs releases contain this package.")
 
 (and (condition-case nil
          (require 'easymenu)
@@ -160,7 +160,7 @@ package. Note that the latest X/Emacs releases contain this package.")
 
 
 (defun intel-hex-calculate-line-checksum ()
-  "Returns the calculated checksum for a line"
+  "Return the calculated checksum for a line."
   (save-excursion
     (beginning-of-line)
     (skip-chars-forward ":")
@@ -178,7 +178,7 @@ package. Note that the latest X/Emacs releases contain this package.")
       (logand 255 (- 256 (logand 255 checksum))))))
 
 (defun intel-hex-update-buffer-checksum ()
-  "Updates the checksums in the whole file"
+  "Update the checksums in the whole file."
   (interactive)
   (save-excursion
     (goto-char 0)
@@ -188,7 +188,8 @@ package. Note that the latest X/Emacs releases contain this package.")
   (message "Operation completed!"))
 
 (defun intel-hex-update-line-checksum ()
-  "Updates the checksum of the current line. If it does not have a checksum
+  "Update the checksum of the current line.
+If it does not have a checksum
 yet, one is appended, otherwise the current one is replaced if necessary."
   (interactive)
   (save-excursion
@@ -209,15 +210,15 @@ yet, one is appended, otherwise the current one is replaced if necessary."
 			   old-checksum new-checksum)))))))))
 
 (defun intel-hex-is-valid-line (decoded)
-  "Returns t if the decoded parameter from intel-hex-decode-line is fine"
+  "Return t if the DECODED parameter from ‘intel-hex-decode-line’ is fine."
   (and (nth 0 decoded) (nth 1 decoded) (nth 2 decoded)
        (nth 3 decoded) (nth 4 decoded)))
 
 (defun intel-hex-decode-line ()
-  "Returns a list in the form (t/nil string string string t/nil string)
+  "Return a list in the form (t/nil string string string t/nil string)
 which represents (in order): if the line has a start code, the byte
 count, the address, the record type, if the line has the correct number
-of bytes, and the checksum. Where items are not present or incorrect,
+of bytes, and the checksum.  Where items are not present or incorrect,
 nil is used"
   (save-excursion
     (beginning-of-line)
@@ -254,7 +255,7 @@ nil is used"
       (list has-start-code byte-count address record-type data checksum))))
 
 (defun intel-hex-address ()
-  "Returns a string for the mode line"
+  "Return a string for the mode line."
   (interactive)
   (let ((decoded (intel-hex-decode-line)))
     (let ((byte-count (string-to-number (nth 1 decoded) 16))
@@ -279,8 +280,8 @@ nil is used"
             (t "[Chks]")))))
 
 (defun intel-hex-get-segment-base ()
-  "Looks backwards for the first record type 2 - extended segment address record,
-and returns its value, or zero"
+  "Search backwards for the first record extended segment address record.
+return its value, or zero"
   (interactive)
   (save-excursion
     (if (search-backward ":02000002" nil t)
