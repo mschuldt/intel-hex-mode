@@ -26,14 +26,14 @@
 ;; Keywords: mode intel hex
 
 ;;; Commentary:
-;; Use this mode for editing files in the intel hex format 
+;; Use this mode for editing files in the intel hex format
 ;; (http://en.wikipedia.org/wiki/Intel_HEX).
 ;;
-;; To use intel-hex-mode, add 
-;; (load-file "PATH_TO_FILE/intel-hex-mode.el") 
+;; To use intel-hex-mode, add
+;; (load-file "PATH_TO_FILE/intel-hex-mode.el")
 ;; to your ~/.emacs(.el) or ~/.xemacs/init.el
 ;;
-;; The intel-hex-mode will do font locking, and calculate checksums. 
+;; The intel-hex-mode will do font locking, and calculate checksums.
 ;; Works on Emacs and XEmacs.
 ;;
 ;; Font locking is automatic.
@@ -45,7 +45,7 @@
 ;; Version 0.1.1 First Version
 ;; 08/10/2008: * First version
 
-;; Version 0.1.2 
+;; Version 0.1.2
 ;; 07/10/2010: * Mode line support to show address (and other field types)
 ;;             * Font lock now also highlights invalid chars
 ;;             * Overwrite mode now on by default
@@ -69,12 +69,12 @@
   "Abbrev table in use in Intel Hex mode buffers.")
 (define-abbrev-table 'intel-hex-mode-abbrev-table ())
 
-(defcustom intel-hex-mode-line t 
+(defcustom intel-hex-mode-line t
   "*Show address in mode line"
   :type 'boolean
   :group 'intel-hex)
 
-(defcustom intel-hex-enable-overwrite t 
+(defcustom intel-hex-enable-overwrite t
   "*Use overwrite minor mode by default"
   :type 'boolean
   :group 'intel-hex)
@@ -101,7 +101,7 @@
 
 ;;;###autoload
 (defun intel-hex-mode ()
-  "Major mode for the Intel Hex files. \\<intel-hex-mode-map> 
+  "Major mode for the Intel Hex files. \\<intel-hex-mode-map>
 
 \\[intel-hex-update-line-checksum]\t- Updates the line checksum.
 \\[intel-hex-update-buffer-checksum]\t- Updates the checksum for all lines in
@@ -114,7 +114,7 @@ Variables specific to this mode:
 
 This mode can be customized by running \\[intel-hex-customize].
 
-Turning on Intel Hex mode calls the value of the variable 
+Turning on Intel Hex mode calls the value of the variable
 `intel-hex-mode-hook' with no args, if that value is non-nil."
   (interactive)
   (kill-all-local-variables)
@@ -122,7 +122,7 @@ Turning on Intel Hex mode calls the value of the variable
   (setq major-mode 'intel-hex-mode)
   (setq mode-name "intel-hex")
   (setq local-abbrev-table intel-hex-mode-abbrev-table)
-;;  (set-syntax-table intel-hex-mode-syntax-table)
+  ;;  (set-syntax-table intel-hex-mode-syntax-table)
   (set (make-local-variable 'font-lock-defaults)
        '(intel-hex-font-lock-keywords))
   (if intel-hex-menu
@@ -133,7 +133,7 @@ Turning on Intel Hex mode calls the value of the variable
       (progn
         (column-number-mode)
         (setq mode-line-format
-              (append (reverse (cdr (reverse mode-line-format))) 
+              (append (reverse (cdr (reverse mode-line-format)))
                       '((:eval (intel-hex-address)))
                       (list (car (reverse mode-line-format)))))))
   (run-hooks 'intel-hex-mode-hook)
@@ -150,13 +150,13 @@ package. Note that the latest X/Emacs releases contain this package.")
          (require 'easymenu)
        (error nil))
      (easy-menu-define
-      intel-hex-menu intel-hex-mode-map "Intel Hex menu"
-      '("Intel Hex"
-        ["Update Line Checksum"       intel-hex-update-line-checksum     t]
-        ["Update File Checksums"      intel-hex-update-buffer-checksum   t]
-        "-"
-        ["Customize..."               intel-hex-customize                t]
-        )))
+       intel-hex-menu intel-hex-mode-map "Intel Hex menu"
+       '("Intel Hex"
+         ["Update Line Checksum"       intel-hex-update-line-checksum     t]
+         ["Update File Checksums"      intel-hex-update-buffer-checksum   t]
+         "-"
+         ["Customize..."               intel-hex-customize                t]
+         )))
 
 
 (defun intel-hex-calculate-line-checksum ()
@@ -164,14 +164,14 @@ package. Note that the latest X/Emacs releases contain this package.")
   (save-excursion
     (beginning-of-line)
     (skip-chars-forward ":")
-    (let ((byte-count (string-to-number 
+    (let ((byte-count (string-to-number
 		       (buffer-substring (point) (+ (point) 2)) 16))
 	  (record-type (buffer-substring (+ (point) 6) (+ (point) 8)))
 	  (checksum 0)
 	  (count 0))
       (while (< count (+ byte-count 4))
-	(setq checksum (+ checksum 
-			  (string-to-number 
+	(setq checksum (+ checksum
+			  (string-to-number
 			   (buffer-substring (point) (+ (point) 2)) 16)))
 	(forward-char 2)
 	(setq count (1+ count)))
@@ -204,10 +204,10 @@ yet, one is appended, otherwise the current one is replaced if necessary."
 		  (if (nth 5 decoded)
 		      (delete-backward-char 2))
 		  (insert (format "%02X" new-checksum))
-		  (message 
-		   (format "Line checksum updated from %02X to %02X." 
+		  (message
+		   (format "Line checksum updated from %02X to %02X."
 			   old-checksum new-checksum)))))))))
-    
+
 (defun intel-hex-is-valid-line (decoded)
   "Returns t if the decoded parameter from intel-hex-decode-line is fine"
   (and (nth 0 decoded) (nth 1 decoded) (nth 2 decoded)
@@ -217,7 +217,7 @@ yet, one is appended, otherwise the current one is replaced if necessary."
   "Returns a list in the form (t/nil string string string t/nil string)
 which represents (in order): if the line has a start code, the byte
 count, the address, the record type, if the line has the correct number
-of bytes, and the checksum. Where items are not present or incorrect, 
+of bytes, and the checksum. Where items are not present or incorrect,
 nil is used"
   (save-excursion
     (beginning-of-line)
@@ -243,14 +243,14 @@ nil is used"
 	  (progn
 	    (setq record-type (buffer-substring (point) (+ 2 (point))))
 	    (forward-char 2)))
-      (if (and record-type 
+      (if (and record-type
 	       (or (= 2 (- exp-line-len line-length))
 		   (= 0 (- exp-line-len line-length))))
 	  (progn
 	    (setq data t)
 	    (forward-char (* 2 (string-to-number byte-count 16)))))
       (if (and data (= 0 (- exp-line-len line-length)))
-	    (setq checksum (buffer-substring (point) (+ 2 (point)))))
+	  (setq checksum (buffer-substring (point) (+ 2 (point)))))
       (list has-start-code byte-count address record-type data checksum))))
 
 (defun intel-hex-address ()
@@ -272,10 +272,10 @@ nil is used"
                                           ((= record-type 4) "[ELAR]")
                                           ((= record-type 5) "[SLAR]")
                                           (t                 "[UNKN]")))
-            ((< (current-column) (+ 9 (* byte-count 2))) 
+            ((< (current-column) (+ 9 (* byte-count 2)))
              (if (= 0 record-type)
                  (format "[%#08X]" (+ (+ (/ (- (current-column) 9) 2) base-addr) segment-base))
-                 "[n/a]"))
+               "[n/a]"))
             (t "[Chks]")))))
 
 (defun intel-hex-get-segment-base ()
