@@ -21,7 +21,7 @@
 ;; Maintainer: Michael Schuldt <mbschuldt@gmail.com>
 ;; URL: https://github.com/mschuldt/intel-hex-mode
 ;; Created: 08 Oct 2008
-;; Version: 0.1.2
+;; Version: 0.1.3
 ;; Keywords: tools hex
 
 ;;; Commentary:
