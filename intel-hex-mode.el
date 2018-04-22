@@ -255,11 +255,10 @@ nil is used"
   "Search backwards for the first record extended segment address record.
 return its value, or zero"
   (save-excursion
-    (if (search-backward ":02000002" nil t)
-        (progn
-          (forward-char 9)
-          (* (string-to-number (buffer-substring (point) (+ (point) 4)) 16) 16))
-      0)))
+    (if (not (search-backward ":02000002" nil t))
+        0
+      (forward-char 9)
+      (* (string-to-number (buffer-substring (point) (+ (point) 4)) 16) 16))))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.hex\\'" . intel-hex-mode))
