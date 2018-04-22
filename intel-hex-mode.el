@@ -82,8 +82,8 @@
 ;;; Key map
 (defvar intel-hex-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map "\C-c\C-c" 'intel-hex-update-line-checksum)
-    (define-key map "\C-c\C-b" 'intel-hex-update-buffer-checksum)
+    (define-key map (kbd "C-c C-c") 'intel-hex-update-line-checksum)
+    (define-key map (kbd "C-c C-b") 'intel-hex-update-buffer-checksum)
     map)
   "Keymap used in Intel Hex mode.")
 
