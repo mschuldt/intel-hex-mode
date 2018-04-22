@@ -154,7 +154,7 @@ Turning on Intel Hex mode calls the value of the variable
   "Update the checksums in the whole file."
   (interactive)
   (save-excursion
-    (goto-char 0)
+    (goto-char (point-min))
     (while (not (eobp))
       (intel-hex-update-line-checksum)
       (forward-line)))
