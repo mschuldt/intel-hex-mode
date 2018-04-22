@@ -37,19 +37,6 @@
 ;;
 ;; Font locking is automatic.
 
-;;; Todo:
-
-;;; History:
-
-;; Version 0.1.1 First Version
-;; 08/10/2008: * First version
-
-;; Version 0.1.2
-;; 07/10/2010: * Mode line support to show address (and other field types)
-;;             * Font lock now also highlights invalid chars
-;;             * Overwrite mode now on by default
-;;             * Record type 04 not supported
-
 ;;; Code:
 
 (require 'easymenu)
