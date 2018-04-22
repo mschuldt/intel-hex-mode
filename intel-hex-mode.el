@@ -69,14 +69,12 @@
 
 ;;; Font lock
 (defvar intel-hex-font-lock-keywords
-  '(
-    ("^\\:" . font-lock-comment-face)
+  '(("^\\:" . font-lock-comment-face)
     ("^\\:\\([0-9A-Fa-f]\\{2\\}\\)" 1 font-lock-variable-name-face)
     ("^\\:[0-9A-Fa-f]\\{2\\}\\([0-9A-Fa-f]\\{4\\}\\)" 1 font-lock-reference-face)
     ("^\\:[0-9A-Fa-f]\\{6\\}\\([0-9A-Fa-f]\\{2\\}\\)" 1 font-lock-string-face)
     ("[^0-9A-Fa-f]+" . font-lock-warning-face)
-    ("\\([0-9A-Fa-f]\\{2\\}\\)$" 1 font-lock-keyword-face)
-    )
+    ("\\([0-9A-Fa-f]\\{2\\}\\)$" 1 font-lock-keyword-face))
   "Highlighting patterns for Intel Hex mode.")
 
 ;;; Key map
@@ -99,8 +97,7 @@ package.  Note that the latest X/Emacs releases contain this package.")
     ["Update Line Checksum"       intel-hex-update-line-checksum     t]
     ["Update File Checksums"      intel-hex-update-buffer-checksum   t]
     "-"
-    ["Customize..."               intel-hex-customize                t]
-    ))
+    ["Customize..."               intel-hex-customize                t]))
 
 ;;;###autoload
 (define-derived-mode intel-hex-mode prog-mode ()
