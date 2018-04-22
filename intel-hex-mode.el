@@ -52,6 +52,8 @@
 
 ;;; Code:
 
+(require 'easymenu)
+
 (defconst intel-hex-mode-version "0.1.2"
   "Version of `intel-hex-mode.el'.")
 
@@ -104,17 +106,14 @@
 This menu will get created automatically if you have the `easymenu'
 package.  Note that the latest X/Emacs releases contain this package.")
 
-(and (condition-case nil
-         (require 'easymenu)
-       (error nil))
-     (easy-menu-define
-       intel-hex-menu intel-hex-mode-map "Intel Hex menu"
-       '("Intel Hex"
-         ["Update Line Checksum"       intel-hex-update-line-checksum     t]
-         ["Update File Checksums"      intel-hex-update-buffer-checksum   t]
-         "-"
-         ["Customize..."               intel-hex-customize                t]
-         )))
+(easy-menu-define
+  intel-hex-menu intel-hex-mode-map "Intel Hex menu"
+  '("Intel Hex"
+    ["Update Line Checksum"       intel-hex-update-line-checksum     t]
+    ["Update File Checksums"      intel-hex-update-buffer-checksum   t]
+    "-"
+    ["Customize..."               intel-hex-customize                t]
+    ))
 
 ;;;###autoload
 (defun intel-hex-mode ()
