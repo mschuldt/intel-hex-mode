@@ -98,6 +98,24 @@
     map)
   "Keymap used in Intel Hex mode.")
 
+;;;; Menu definitions
+(defvar intel-hex-menu nil
+  "Menu for Intel Hex Mode.
+This menu will get created automatically if you have the `easymenu'
+package.  Note that the latest X/Emacs releases contain this package.")
+
+(and (condition-case nil
+         (require 'easymenu)
+       (error nil))
+     (easy-menu-define
+       intel-hex-menu intel-hex-mode-map "Intel Hex menu"
+       '("Intel Hex"
+         ["Update Line Checksum"       intel-hex-update-line-checksum     t]
+         ["Update File Checksums"      intel-hex-update-buffer-checksum   t]
+         "-"
+         ["Customize..."               intel-hex-customize                t]
+         )))
+
 ;;;###autoload
 (defun intel-hex-mode ()
   "Major mode for the Intel Hex files.
@@ -137,26 +155,6 @@ Turning on Intel Hex mode calls the value of the variable
                       (list (car (reverse mode-line-format)))))))
   (run-hooks 'intel-hex-mode-hook)
   )
-
-;;;; Menu definitions
-
-(defvar intel-hex-menu nil
-  "Menu for Intel Hex Mode.
-This menu will get created automatically if you have the `easymenu'
-package.  Note that the latest X/Emacs releases contain this package.")
-
-(and (condition-case nil
-         (require 'easymenu)
-       (error nil))
-     (easy-menu-define
-       intel-hex-menu intel-hex-mode-map "Intel Hex menu"
-       '("Intel Hex"
-         ["Update Line Checksum"       intel-hex-update-line-checksum     t]
-         ["Update File Checksums"      intel-hex-update-buffer-checksum   t]
-         "-"
-         ["Customize..."               intel-hex-customize                t]
-         )))
-
 
 (defun intel-hex-calculate-line-checksum ()
   "Return the calculated checksum for a line."
