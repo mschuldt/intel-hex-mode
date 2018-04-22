@@ -54,7 +54,7 @@
 
 (require 'easymenu)
 
-(defconst intel-hex-mode-version "0.1.2"
+(defconst intel-hex-mode-version "0.1.3"
   "Version of `intel-hex-mode.el'.")
 
 (defgroup intel-hex nil
