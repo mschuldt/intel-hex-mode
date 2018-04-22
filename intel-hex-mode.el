@@ -116,7 +116,7 @@ package.  Note that the latest X/Emacs releases contain this package.")
     ))
 
 ;;;###autoload
-(defun intel-hex-mode ()
+(define-derived-mode intel-hex-mode prog-mode ()
   "Major mode for the Intel Hex files.
 \\<intel-hex-mode-map>
 \\[intel-hex-update-line-checksum]\t- Updates the line checksum.
@@ -134,11 +134,6 @@ Turning on Intel Hex mode calls the value of the variable
 `intel-hex-mode-hook' with no args, if that value is non-nil."
   (interactive)
   (kill-all-local-variables)
-  (use-local-map intel-hex-mode-map)
-  (setq major-mode 'intel-hex-mode)
-  (setq mode-name "intel-hex")
-  (setq local-abbrev-table intel-hex-mode-abbrev-table)
-  ;;  (set-syntax-table intel-hex-mode-syntax-table)
   (set (make-local-variable 'font-lock-defaults)
        '(intel-hex-font-lock-keywords))
   (if intel-hex-menu
@@ -151,9 +146,7 @@ Turning on Intel Hex mode calls the value of the variable
         (setq mode-line-format
               (append (reverse (cdr (reverse mode-line-format)))
                       '((:eval (intel-hex-address)))
-                      (list (car (reverse mode-line-format)))))))
-  (run-hooks 'intel-hex-mode-hook)
-  )
+                      (list (car (reverse mode-line-format))))))))
 
 (defun intel-hex-calculate-line-checksum ()
   "Return the calculated checksum for a line."
