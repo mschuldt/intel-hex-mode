@@ -6,13 +6,12 @@ Features:
  - Provides font-locking
  - Uses the mode line to show addresses and field types
  - Detects and uses easymenu if available
- - Works on Emacs and XEmacs
 
 To use intel-hex-mode, add
 #+BEGIN_SRC emacs-lisp
 (load-file "PATH_TO_FILE/intel-hex-mode.el")
 #+END_SRC
-to your =~/.emacs(.el)= or =~/.xemacs/init.el=
+to your =~/.emacs(.el)=
 
 By default, this mode is enabled for files with a .a90, .hex, .a43, or .ihx extension.
 

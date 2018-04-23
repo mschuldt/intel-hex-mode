@@ -30,10 +30,9 @@
 ;;
 ;; To use intel-hex-mode, add
 ;; (load-file "PATH_TO_FILE/intel-hex-mode.el")
-;; to your ~/.emacs(.el) or ~/.xemacs/init.el
+;; to your ~/.emacs(.el)
 ;;
 ;; The intel-hex-mode will do font locking, and calculate checksums.
-;; Works on Emacs and XEmacs.
 ;;
 ;; Font locking is automatic.
 
