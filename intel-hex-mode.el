@@ -93,10 +93,10 @@ package.  Note that the latest X/Emacs releases contain this package.")
 (easy-menu-define
   intel-hex-menu intel-hex-mode-map "Intel Hex menu"
   '("Intel Hex"
-    ["Update Line Checksum"	  intel-hex-update-line-checksum     t]
-    ["Update File Checksums"	  intel-hex-update-buffer-checksum   t]
+    ["Update Line Checksum"       intel-hex-update-line-checksum     t]
+    ["Update File Checksums"      intel-hex-update-buffer-checksum   t]
     "-"
-    ["Customize..."		  intel-hex-customize		     t]))
+    ["Customize..."               intel-hex-customize                t]))
 
 ;;;###autoload
 (define-derived-mode intel-hex-mode prog-mode ()
@@ -108,7 +108,7 @@ the current buffer.
 
 Variables specific to this mode:
 
-  intel-hex-some-variable	     (default `value')
+  intel-hex-some-variable            (default `value')
        Some variable.
 
 This mode can be customized by running \\[intel-hex-customize].
@@ -125,11 +125,11 @@ Turning on Intel Hex mode calls the value of the variable
       (overwrite-mode t))
   (if intel-hex-mode-line
       (progn
-	(column-number-mode)
+        (column-number-mode)
 	(setq mode-line-format
-	      (append (reverse (cdr (reverse mode-line-format)))
-		      '((:eval (intel-hex-address)))
-		      (list (car (reverse mode-line-format))))))))
+              (append (reverse (cdr (reverse mode-line-format)))
+                      '((:eval (intel-hex-address)))
+                      (list (car (reverse mode-line-format))))))))
 
 (defun intel-hex-calculate-line-checksum ()
   "Return the calculated checksum for a line."
@@ -230,25 +230,25 @@ nil is used"
   "Return a string for the mode line."
   (let ((decoded (intel-hex-decode-line)))
     (let ((byte-count (string-to-number (nth 1 decoded) 16))
-	  (base-addr (string-to-number (nth 2 decoded) 16))
-	  (record-type (string-to-number (nth 3 decoded)))
-	  (segment-base (intel-hex-get-segment-base)))
+          (base-addr (string-to-number (nth 2 decoded) 16))
+          (record-type (string-to-number (nth 3 decoded)))
+          (segment-base (intel-hex-get-segment-base)))
       (cond ((not (intel-hex-is-valid-line decoded)) "[ERR]")
-	    ((< (current-column) 1) "[Start]")
-	    ((< (current-column) 3) "[Count]")
-	    ((< (current-column) 7) "[Addr]")
-	    ((< (current-column) 9) (cond ((= record-type 0) "[Data]")
-					  ((= record-type 1) "[EOF]")
-					  ((= record-type 2) "[ESAR]")
-					  ((= record-type 3) "[SSAR]")
-					  ((= record-type 4) "[ELAR]")
-					  ((= record-type 5) "[SLAR]")
-					  (t		     "[UNKN]")))
-	    ((< (current-column) (+ 9 (* byte-count 2)))
-	     (if (= 0 record-type)
-		 (format "[%#08X]" (+ (+ (/ (- (current-column) 9) 2) base-addr) segment-base))
-	       "[n/a]"))
-	    (t "[Chks]")))))
+            ((< (current-column) 1) "[Start]")
+            ((< (current-column) 3) "[Count]")
+            ((< (current-column) 7) "[Addr]")
+            ((< (current-column) 9) (cond ((= record-type 0) "[Data]")
+                                          ((= record-type 1) "[EOF]")
+                                          ((= record-type 2) "[ESAR]")
+                                          ((= record-type 3) "[SSAR]")
+                                          ((= record-type 4) "[ELAR]")
+                                          ((= record-type 5) "[SLAR]")
+                                          (t                 "[UNKN]")))
+            ((< (current-column) (+ 9 (* byte-count 2)))
+             (if (= 0 record-type)
+                 (format "[%#08X]" (+ (+ (/ (- (current-column) 9) 2) base-addr) segment-base))
+               "[n/a]"))
+            (t "[Chks]")))))
 
 (defun intel-hex-get-segment-base ()
   "Search backwards for the first record extended segment address record.
