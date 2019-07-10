@@ -126,7 +126,7 @@ Turning on Intel Hex mode calls the value of the variable
   (if intel-hex-mode-line
       (progn
         (column-number-mode)
-	(setq mode-line-format
+        (setq mode-line-format
               (append (reverse (cdr (reverse mode-line-format)))
                       '((:eval (intel-hex-address)))
                       (list (car (reverse mode-line-format))))))))
