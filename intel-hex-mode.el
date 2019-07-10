@@ -255,7 +255,10 @@ nil is used"
 return its value, or zero"
   (save-excursion
     (if (not (search-backward ":02000002" nil t))
-        0
+	(if (not (search-backward ":02000004" nil t))
+	    0
+	  (forward-char 9)
+	  (* (string-to-number (buffer-substring (point) (+ (point) 4)) 16) 65536))
       (forward-char 9)
       (* (string-to-number (buffer-substring (point) (+ (point) 4)) 16) 16))))
 
