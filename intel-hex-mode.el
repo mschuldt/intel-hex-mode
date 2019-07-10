@@ -137,16 +137,16 @@ Turning on Intel Hex mode calls the value of the variable
     (beginning-of-line)
     (skip-chars-forward ":")
     (let ((byte-count (string-to-number
-		       (buffer-substring (point) (+ (point) 2)) 16))
-	  (record-type (buffer-substring (+ (point) 6) (+ (point) 8)))
-	  (checksum 0)
-	  (count 0))
+                       (buffer-substring (point) (+ (point) 2)) 16))
+          (record-type (buffer-substring (+ (point) 6) (+ (point) 8)))
+          (checksum 0)
+          (count 0))
       (while (< count (+ byte-count 4))
-	(setq checksum (+ checksum
-			  (string-to-number
-			   (buffer-substring (point) (+ (point) 2)) 16)))
-	(forward-char 2)
-	(setq count (1+ count)))
+        (setq checksum (+ checksum
+                          (string-to-number
+                           (buffer-substring (point) (+ (point) 2)) 16)))
+        (forward-char 2)
+        (setq count (1+ count)))
       (logand 255 (- 256 (logand 255 checksum))))))
 
 (defun intel-hex-update-buffer-checksum ()
@@ -168,18 +168,18 @@ yet, one is appended, otherwise the current one is replaced if necessary."
     (end-of-line)
     (let ((decoded (intel-hex-decode-line)))
       (if (intel-hex-is-valid-line decoded)
-	  (let ((new-checksum (intel-hex-calculate-line-checksum))
-		(old-checksum (if (nth 5 decoded)
-				  (string-to-number (nth 5 decoded) 16)
-				-1)))
-	    (if (/= new-checksum old-checksum)
-		(progn
-		  (if (nth 5 decoded)
-		      (delete-char -2))
-		  (insert (format "%02X" new-checksum))
-		  (message
-		   (format "Line checksum updated from %02X to %02X."
-			   old-checksum new-checksum)))))))))
+          (let ((new-checksum (intel-hex-calculate-line-checksum))
+                (old-checksum (if (nth 5 decoded)
+                                  (string-to-number (nth 5 decoded) 16)
+                                -1)))
+            (if (/= new-checksum old-checksum)
+                (progn
+                  (if (nth 5 decoded)
+                      (delete-char -2))
+                  (insert (format "%02X" new-checksum))
+                  (message
+                   (format "Line checksum updated from %02X to %02X."
+                           old-checksum new-checksum)))))))))
 
 (defun intel-hex-is-valid-line (decoded)
   "Return t if the DECODED parameter from ‘intel-hex-decode-line’ is fine."
@@ -195,35 +195,35 @@ nil is used"
   (save-excursion
     (beginning-of-line)
     (let ((line-length (- (line-end-position) (point)))
-	  (has-start-code (looking-at ":"))
-	  (byte-count nil)
-	  (address nil)
-	  (record-type nil)
-	  (data nil)
-	  (checksum nil)
-	  (exp-line-len 11))
+          (has-start-code (looking-at ":"))
+          (byte-count nil)
+          (address nil)
+          (record-type nil)
+          (data nil)
+          (checksum nil)
+          (exp-line-len 11))
       (if (and has-start-code (> line-length 2))
-	  (progn
-	    (forward-char 1)
-	    (setq byte-count (buffer-substring (point) (+ 2 (point))))
-	    (setq exp-line-len (+ (* 2 (string-to-number byte-count 16)) 11))
-	    (forward-char 2)))
+          (progn
+            (forward-char 1)
+            (setq byte-count (buffer-substring (point) (+ 2 (point))))
+            (setq exp-line-len (+ (* 2 (string-to-number byte-count 16)) 11))
+            (forward-char 2)))
       (if (and byte-count (> line-length 6))
-	  (progn
-	    (setq address (buffer-substring (point) (+ 4 (point))))
-	    (forward-char 4)))
+          (progn
+            (setq address (buffer-substring (point) (+ 4 (point))))
+            (forward-char 4)))
       (if (and address (> line-length 8))
-	  (progn
-	    (setq record-type (buffer-substring (point) (+ 2 (point))))
-	    (forward-char 2)))
+          (progn
+            (setq record-type (buffer-substring (point) (+ 2 (point))))
+            (forward-char 2)))
       (if (and record-type
-	       (or (= 2 (- exp-line-len line-length))
-		   (= 0 (- exp-line-len line-length))))
-	  (progn
-	    (setq data t)
-	    (forward-char (* 2 (string-to-number byte-count 16)))))
+               (or (= 2 (- exp-line-len line-length))
+                   (= 0 (- exp-line-len line-length))))
+          (progn
+            (setq data t)
+            (forward-char (* 2 (string-to-number byte-count 16)))))
       (if (and data (= 0 (- exp-line-len line-length)))
-	  (setq checksum (buffer-substring (point) (+ 2 (point)))))
+          (setq checksum (buffer-substring (point) (+ 2 (point)))))
       (list has-start-code byte-count address record-type data checksum))))
 
 (defun intel-hex-address ()
@@ -255,7 +255,10 @@ nil is used"
 return its value, or zero"
   (save-excursion
     (if (not (search-backward ":02000002" nil t))
-        0
+        (if (not (search-backward ":02000004" nil t))
+            0
+          (forward-char 9)
+          (* (string-to-number (buffer-substring (point) (+ (point) 4)) 16) 65536))
       (forward-char 9)
       (* (string-to-number (buffer-substring (point) (+ (point) 4)) 16) 16))))
 
